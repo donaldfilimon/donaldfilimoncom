@@ -1,0 +1,35 @@
+{
+  "name": "react-template",
+  "version": "1.0.0",
+  "description": "A simple node app built on W3Schools dynamic spaces",
+  "main": "src/server/index.js",
+  "scripts": {
+    "start": "vite build && node src/server/index.js",
+    "server": "nodemon src/server/index.js",
+    "dev": "npm run server 2>&1 & vite dev < /dev/null"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.16.3",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-router-dom": "^6.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^3.0.0",
+    "nodemon": "^1.17.3",
+    "vite": "^4.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
