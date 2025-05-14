@@ -1,0 +1,294 @@
+/* Classes, elements, and IDs are arranged in the order in which they appear on the webpage, from top to bottom. */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+:root {
+  --light-dark: #282A35;
+  --super-dark: #000000;
+  --body-dark: rgba(0,0,0,0.5);
+  --prime-button: #96D4D4;
+  --no-image: #FFF4A3;
+  --big-font-size: 1.875rem;
+  --normal-font-size: 1.25rem;
+  --small-font-size: .75rem;
+  --bold: 700;
+  --normal: 400;
+  --opacity-high: .2;
+  --image-field-big-w: 700px;
+  --image-field-big-h: 470px;
+  --image-field-small-w: 320px;
+  --image-field-small-h: 220px;
+}
+
+body {
+  background: #15151a;
+  color: #FFF;
+  height: 100vh;
+}
+
+p {
+  font-weight: var(--normal);
+  font-size: var(--normal-font-size);
+}
+
+.center-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opacity-high{
+  opacity: var(--opacity-high)
+}
+
+header {
+  background-color: #282A35;
+  height: 13%;
+  width: 100%;
+}
+
+.header-span {
+  font-size: var(--big-font-size);
+  font-weight: var(--bold);
+  opacity: .8;
+  text-align: center;
+}
+
+.header-span-span {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.status {
+  height: 100px;
+}
+
+.message {
+  font-weight: var(--normal);
+  font-size: var(--normal-font-size);
+  font-family: 'Inter', sans-serif;
+  color: #FFF4A3;
+}
+
+#chosen-image-container {
+  display: none;
+  height: var(--image-field-big-h)
+}
+
+#chosen-image{
+  width: var(--image-field-big-w);
+  height: var(--image-field-big-h);
+}
+
+.filename {
+  font-weight: var(--bold);
+  font-size: var(--big-font-size);
+}
+
+#image-container, #upload-container{
+  margin: 0 auto 3.125rem;
+  width: var(--image-field-big-w);
+  height: var(--image-field-big-h);
+}
+
+label {
+  width: 100%;
+}
+
+#upload-input {
+  display: none;
+}
+
+#upload-field {
+  background-color: var(--super-dark);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  width: var(--image-field-big-w);
+  height: var(--image-field-big-h);
+  flex-direction: column;
+}
+
+#upload-field:hover, #upload-field:focus {
+  background-color: var(--light-dark);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.upload-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: .813rem;
+}
+
+.upload-text {
+  font-weight: var(--bold);
+  font-size: var(--normal-font-size)
+}
+
+/* This is relevant to the file input section */
+#django-power-container {
+  height: 40px;
+  margin-top: 15px;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#django-power-container-mobile, #django-signature-mobile {
+  display: none;
+}
+
+#django-signature {
+  text-align: right;
+  font-weight: var(--normal);
+  font-size: var(--small-font-size);
+}
+
+.prediction-container {
+  min-height: 130px;
+  text-align: center;
+}
+
+.prediction {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--normal-font-size);
+  font-weight: var(--bold);
+}
+
+#percentage-prediction::before{
+  content: ', ';
+}
+
+.result {
+  font-family: 'Inter', sans-serif;
+  font-size: 3.125rem;
+  font-weight: var(--bold);
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 0 2rem;
+}
+
+.action-child{
+  width: 115px;
+}
+
+#reset{
+  text-align: center;
+  font-weight: var(--normal);
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--prime-button);
+}
+
+#submit {
+  padding: .624rem 1.25rem;
+  border-radius: 50px;
+  background-color: var(--prime-button);
+  display: flex;
+  cursor: pointer;
+  width: fit-content;
+  margin: 0.5rem 0;
+}
+
+.submit-text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: var(--small-font-size);
+  font-weight: var(--bold);
+  color: #000;
+  margin-left: .2rem;
+}
+
+@media (max-width: 900px) {
+  #image-container, #upload-container{
+    position: relative;
+  }
+  
+  #percentage-prediction::before{
+    white-space: pre;
+    content:'\A'
+  }
+
+  .prediction-container{
+    min-height: 170px;
+  }
+
+  #empty-child{
+    display: none;
+  }
+
+  #reset-parent{
+    text-align: center;
+  }
+
+  #django-signature {
+    display: none;
+  }
+
+  #django-power-container-mobile {
+    display: block;
+    position: relative;
+    top: 10px;
+    text-align: right;
+  }
+
+  #django-signature-mobile {
+    display: block;
+    text-align: right;
+    font-weight: var(--normal);
+    font-size: var(--small-font-size);
+  }
+}
+
+@media (min-width: 1480px) {
+  .actions-container {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 750px) {
+  #chosen-image, #upload-field, #image-container, #upload-container {
+    width: 550px;
+    height: 380px;
+  }
+
+  #chosen-image-container {
+    height: 380px;
+  }
+}
+
+@media (max-width: 560px) {
+  #chosen-image, #upload-field, #image-container, #upload-container {
+    width: var(--image-field-small-w);
+    height: var(--image-field-small-h);
+  }
+
+  #chosen-image-container {
+    height: var(--image-field-small-h);
+  }
+}
+
+@media (max-width: 350px) {
+  #chosen-image, #upload-field, #image-container, #upload-container {
+    width: 220px;
+    height: 160px;
+  }
+
+  #chosen-image-container {
+    height: 160px;
+  }
+
+}

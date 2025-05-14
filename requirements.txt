@@ -1,0 +1,8 @@
+tensorflow
+tensorflow-io
+keras
+numpy
+matplotlib
+Django
+opencv-python
+django-environ

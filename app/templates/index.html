@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+  {% comment %} HEADER {% endcomment %}
+  <header class="center-container">
+    <span class="header-span">
+      AI<span class="header-span-span">Image Prediction Tool</span>
+    </span>
+  </header>
+
+  {% comment %} Image selection span {% endcomment %}
+  <section class="status center-container">
+    {% if message %}
+    <p id="message" class="message">{{ message }}</p>
+    {% else %}
+    <p id="filename" class="filename">{{ filename }}</p>
+    {% endif %}
+  </section>
+
+  {% comment %} File input and django powered text{% endcomment %}
+  {% if filename %}
+    <section id="image-container" class="center-container">
+      <img id="chosen-image" src="/media/{{ filename }}" />
+    </section>
+  {% else %}
+  <section id="upload-container">
+    <section class="center-container">
+      <div id="chosen-image-container"></div>
+      <form method="POST" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        <label for="upload-input">
+          <div id="upload-field" class="center-container" >
+            <img class="upload-icon" src="{% static '/images/plus.png' %}" />
+            <p class="upload-text">Add</p>
+          </div>
+        </label>
+        <input
+        type="file"
+        accept="image"
+        name="image"
+        id="upload-input"
+        onchange='onChangeHandler(this)'
+        />
+      </form>
+    </section>
+    <div id="django-power-container-mobile">
+      <p id="django-signature-mobile">Powered by<br> Django</p>
+    </div>
+  </section>
+  {% endif %}
+{% comment %} Prediction text section {% endcomment %}
+  <section class="prediction-container">
+    {% if predicted %}
+      <p class="prediction">Predicted:</p>
+      <p class="result">{{ category }}<span id="percentage-prediction" data-mobile='<br>'>{{ percentage }}%</span></p>
+    {% elif predicted == False %}
+      <p class="prediction">Predicted:</p>
+      <p class="result">{{ category }}</p>
+    {% else %}
+      <p class="prediction opacity-high">Predicted:</p>
+    {% endif %}
+  </section>
+
+{% comment %} Reset and submit div {% endcomment %}
+  <section class="actions-container">
+    <div id="reset-parent" class="action-child">
+      <form>
+      </form>
+      <div style="text-align: center;">
+        <a id="reset" class="{% if not filename %}opacity-high{% endif %}" href="/reset">Reset</a>
+      </div>
+    </div>
+    <div class="action-child">
+      <div id="submit" class="opacity-high" onclick="formHandler()">
+        <img src="{% static "/images/heartbeat-monitor.png" %}" />
+        <span class="submit-text">&nbsp;&nbsp;Analyse</span>
+      </div>
+    </div>
+  </section>
+  <div id="django-power-container">
+    <p id="django-signature">Powered by<br> Django</p>
+  </div>
+
+  <script>
+    const chosenImageContainer = document.querySelector('#chosen-image-container')
+    const statusParagraph = document.querySelector("#message")
+    const resetAnchor = document.querySelector("#reset")
+    const submitButton = document.querySelector("#submit")
+    const form = document.querySelector("form")
+    const reader = new FileReader();
+
+    const onChangeHandler = (inputElement) => {
+      form.style.display = 'none'
+      chosenImageContainer.style.display = 'block'
+      const imgElement = document.createElement('img')
+      const filename = inputElement.files[0].name
+      const image = inputElement.files[0]
+      reader.readAsDataURL(image)
+      reader.onload = () => {
+        if (image.type.startsWith("image")) {
+          reader.onloadend = () => {
+            imgElement.src = reader.result
+          }
+          imgElement.id = "chosen-image"
+          chosenImageContainer.appendChild(imgElement)
+          statusParagraph.textContent = filename
+          statusParagraph.classList.remove('message')
+          statusParagraph.classList.add('filename')
+          resetAnchor.classList.remove('opacity-high')
+          submitButton.classList.remove('opacity-high')      
+        } else {
+          statusParagraph.textContent = 'Not a supported file type. Choose a different image.'
+          form.style.display = 'block'
+          chosenImageContainer.style.display = 'none'
+          return
+        }
+      }
+    }
+
+    const formHandler = () => {
+      const imageContainer = document.querySelector('#image-container');
+      if (form === null || !form) {
+        return;
+      }
+      if(chosenImageContainer.childNodes[0]) {
+        form.submit();
+      } else {
+        console.log('No image chosen')
+      }
+    }
+  </script>
+{% endblock %}

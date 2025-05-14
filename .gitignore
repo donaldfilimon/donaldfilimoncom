@@ -1,0 +1,7 @@
+.pyc
+__pycache__
+blog/migrations/__pycache__
+blog_template/__pycache__
+w3s-dynamic-storage/database.db
+w3s-dynamic-storage/media/*
+.venv
