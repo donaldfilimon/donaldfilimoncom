@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% block title %}
+  <title>Python blank template</title>
+  {% endblock %}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  {% block head %}
+  <!-- this can be overruled -->
+  {% endblock %}
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div>{% block content %}{% endblock %}</div>
+  </div>
+</body>
+
+</html>
