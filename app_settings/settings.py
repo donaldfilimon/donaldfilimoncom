@@ -15,7 +15,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 CSRF_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = True
-CSRF_HEADER_NAME = 'CSRF_COOKIE'
+CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
 
 # Application definition
 
@@ -62,20 +62,6 @@ WSGI_APPLICATION = 'app_settings.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-def get_db_config(environ_var):
-    """Get Database configuration."""
-    options = env.db(var=environ_var, default='sqlite:///w3s-dynamic-storage/database.db')
-    if options.get('ENGINE') != 'django.db.backends.sqlite3':
-        return options
-
-    # This will allow use a relative to the project root DB path
-    # for SQLite like 'sqlite:///db.sqlite3'
-    if not options['NAME'] == ':memory:' and not os.path.isabs(options['NAME']):
-        options.update({'NAME': os.path.join(BASE_DIR, options['NAME'])})
-
-    return options
-
-
 DATABASES = {
     'default': get_db_config('DATABASE_URL'),
 }
@@ -102,7 +88,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
+# https://www.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 

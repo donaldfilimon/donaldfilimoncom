@@ -15,7 +15,7 @@ from model import create_cifar_model
 def load_dataset():
   (trainX, trainY), (testX, testY) = cifar10.load_data()
   trainY = to_categorical(trainY)
-  testY = to_categorical(trainY)
+  testY = to_categorical(testY)
   return trainX, trainY, testX, testY
 
 def normalize_data(train, test):

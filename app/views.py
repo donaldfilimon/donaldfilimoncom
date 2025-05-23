@@ -43,6 +43,13 @@ class IndexView(base.View):
     try:
       # Casting the image to the correct datatype to fit the model.
       raw_image = request.FILES["image"]
+      if not raw_image.content_type.startswith('image'):
+        context = {
+          "message": "Not a supported file type. Choose a different image."
+        }
+        request.session['context'] = context
+        return redirect(reverse('index'))
+        
       fs_image = fs.save(raw_image.name, raw_image)
       image_path = str(settings.MEDIA_ROOT) + "/" + raw_image.name
       cv2_image = cv2.imread(image_path)

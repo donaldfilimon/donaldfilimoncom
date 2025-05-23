@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+  <header class="center-container">
+    <span class="header-span">
+      AI<span class="header-span-span">Prediction History</span>
+    </span>
+  </header>
+
+  <section class="history-container center-container">
+    {% if predictions %}
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Prediction</th>
+            <th>Confidence</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for prediction in predictions %}
+            <tr>
+              <td><img src="/media/{{ prediction.image }}" alt="Prediction Image" class="history-image"></td>
+              <td>{{ prediction.category }}</td>
+              <td>{{ prediction.percentage }}%</td>
+              <td>{{ prediction.date }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No predictions found.</p>
+    {% endif %}
+  </section>
+
+  <div id="django-power-container">
+    <p id="django-signature">Powered by<br> Django</p>
+  </div>
+
+{% endblock %}
