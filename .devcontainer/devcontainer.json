@@ -1,7 +1,7 @@
 {
   "tasks": {
-    "build": "pip install -r requirements.txt",
-    "test": "pip install -r requirements.txt && pytest",
-    "launch": "python manage.py runserver"
+    "build": "cd donaldfilimon && pip install -r requirements.txt",
+    "test": "cd donaldfilimon && pip install -r requirements.txt && pytest",
+    "launch": "cd donaldfilimon && python manage.py runserver"
   }
 }

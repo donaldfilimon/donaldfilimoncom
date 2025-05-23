@@ -11,7 +11,28 @@ We provide a simple trained AI for the website to use. It is not perfect by any 
 
 You can find the model structure in `app/CNN/model.py`. The model is easy to understand, and the training doesn't demand too much computer resources. 
 
-If you want to train a model yourself you have to use your own computer and do it locally. You do this by cl It is set up for CPU use. If your computer have the correct architecture you 
+If you want to train a model yourself you have to use your own computer and do it locally. You do this by cloning the repository to your local machine and running the training script. The training script is located in `ai/CIFAR_training.py`. It is set up for CPU use. If your computer has the correct architecture, you can also use a GPU for faster training.
+
+To train the model locally, follow these steps:
+
+1. Clone the repository to your local machine:
+   ```
+   git clone https://github.com/donaldfilimon/donaldfilimoncom.git
+   cd donaldfilimoncom
+   ```
+
+2. Install the required dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. Run the training script:
+   ```
+   python ai/CIFAR_training.py
+   ```
+
+4. The trained model will be saved as `cifar_model_<timestamp>.h5` in the current directory.
+
 ## Knowledge requirements
 
 To be able to fully understand and modify this template to your needs, there are several things you should know (or learn):
