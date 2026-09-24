@@ -39,15 +39,43 @@ jobs:
         uses: actions/upload-pages-artifact@v3
 
   # Test and Lint job
+  # Runs on the macOS arm64 self-hosted runner registered to this repository
+  # with the label donaldfilimoncom: GitHub-hosted jobs cannot start while the
+  # account's Actions billing is locked, but self-hosted jobs still run. This
+  # workflow has only trusted triggers (push to main, workflow_dispatch); the
+  # gate below skips any other event, so a trigger added later cannot put
+  # untrusted code on the self-hosted machine.
+  # Until a runner with these labels is online, this job waits in the queue.
+  # See docs/SelfHostedRunner.md.
   test_and_lint:
-    runs-on: ubuntu-latest
+    if: >
+      github.repository == 'donaldfilimon/donaldfilimoncom' &&
+      (github.event_name == 'push' ||
+       github.event_name == 'workflow_dispatch')
+    runs-on: [self-hosted, macOS, ARM64, donaldfilimoncom]
+    # This job only reads the repository; drop the workflow's Pages scopes.
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          persist-credentials: false
+      # actions/setup-python cannot be used here: on a self-hosted Mac it runs
+      # `sudo installer -pkg` into /Library/Frameworks and needs a writable
+      # /Users/runner/hostedtoolcache. Homebrew's current python@3.x is the
+      # same "latest 3.x" that python-version '3.x' selected, installed per
+      # user and without sudo. Its libexec/bin puts an unversioned `python`
+      # on PATH for the unchanged steps below.
+      - name: Set up Python
+        run: |
+          brew="$(command -v brew || echo /opt/homebrew/bin/brew)"
+          if ! prefix="$("$brew" --prefix --installed python)"; then
+            echo "::error::Homebrew python is not installed on this runner. Run: brew install python"
+            exit 1
+          fi
+          echo "$prefix/libexec/bin" >> "$GITHUB_PATH"
+          "$prefix/libexec/bin/python" --version
       - name: Install dependencies
         run: |
           python -m venv venv
